@@ -75,6 +75,8 @@ github.com/modular-project/protobuffers v0.0.0-20220725164803-6adba72c0ce6 h1:o+
 github.com/modular-project/protobuffers v0.0.0-20220725164803-6adba72c0ce6/go.mod h1:A6qBaXQhNp1BNqSqi4IbpNQ17cjdB8qEpYeJKaslnOw=
 github.com/modular-project/protobuffers v0.0.0-20220819170417-f9b94a1b25a4 h1:aIAriu7NLpQQoHCwS0JZZ7gt0SFJ2kb7/ULnk+D1ob0=
 github.com/modular-project/protobuffers v0.0.0-20220819170417-f9b94a1b25a4/go.mod h1:A6qBaXQhNp1BNqSqi4IbpNQ17cjdB8qEpYeJKaslnOw=
+github.com/modular-project/protobuffers v0.0.0-20220912155936-0cfd57444ce6 h1:2tiUDaJLgLzSsiKiJ5aqQebnWMTM3tCgGtg6uREGXys=
+github.com/modular-project/protobuffers v0.0.0-20220912155936-0cfd57444ce6/go.mod h1:A6qBaXQhNp1BNqSqi4IbpNQ17cjdB8qEpYeJKaslnOw=
 github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe h1:iruDEfMl2E6fbMZ9s0scYfZQ84/6SPL6zC8ACM2oIL0=
 github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe/go.mod h1:wL8QJuTMNUDYhXwkmfOly8iTdp5TEcJFWZD2D7SIkUc=
 github.com/opentracing/opentracing-go v1.1.0/go.mod h1:UkNAQd3GIcIGf0SeVgPpRdFStlNbqXla1AfSYxPUl2o=

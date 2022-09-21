@@ -33,8 +33,8 @@ func (gm gMapService) GeoCode(ctx context.Context, add string) (model.Location, 
 	}
 	r := res[0]
 	loc := model.Location{
-		Long: r.Geometry.Location.Lng,
-		Lat:  r.Geometry.Location.Lat,
+		Type:        "Point",
+		Coordinates: []float64{r.Geometry.Location.Lng, r.Geometry.Location.Lat},
 	}
 	return loc, nil
 }

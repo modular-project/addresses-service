@@ -16,7 +16,7 @@ type AddressStorager interface {
 	DeleteByID(context.Context, string) (int64, error)
 	GetByID(context.Context, string) (model.Address, error)
 	Search(context.Context, *model.Search) ([]model.Address, error)
-	Nearest(context.Context, model.Location) (string, error)
+	Nearest(context.Context, []float64) (string, error)
 }
 
 type DeliveryStorager interface {
@@ -78,7 +78,7 @@ func (as AddressService) Nearest(ctx context.Context, uID uint64, aID string) (s
 	if err != nil {
 		return "", fmt.Errorf("dst.GetByID: %w", err)
 	}
-	id, err := as.ast.Nearest(ctx, add.Location)
+	id, err := as.ast.Nearest(ctx, add.Location.Coordinates)
 	if err != nil {
 		return "", fmt.Errorf("ast.Nearest: %w", err)
 	}

@@ -23,7 +23,7 @@ func Test_gMapService_GeoCode(t *testing.T) {
 		{
 			name: "OK API KEY",
 			args: args{context.Background(), "Blvd. Gral. Marcelino García Barragán 1421, Olímpica, 44430 Guadalajara, Jal."},
-			want: model.Location{Long: -103.3266212, Lat: 20.6545464},
+			want: model.Location{Type: "Point", Coordinates: []float64{-103.3266212, 20.6545464}},
 		},
 	}
 	key, ok := os.LookupEnv("GMAP_APIKEY")

@@ -3,6 +3,7 @@ package storage
 import (
 	"context"
 	"fmt"
+	"log"
 
 	"github.com/modular-project/address-service/model"
 	"go.mongodb.org/mongo-driver/bson"
@@ -17,7 +18,7 @@ type AddressStorage struct {
 }
 
 func NewAddressStorage(db *mongo.Database, max int) AddressStorage {
-	return AddressStorage{c: db.Collection("delivery"), maxDis: max}
+	return AddressStorage{c: db.Collection("establishment"), maxDis: max}
 }
 
 func (as AddressStorage) GetByID(ctx context.Context, aID string) (model.Address, error) {
@@ -65,18 +66,20 @@ func (as AddressStorage) Search(ctx context.Context, s *model.Search) ([]model.A
 	opt := options.FindOptions{
 		Limit: &s.Limit,
 		Skip:  &s.Offset,
+		Sort:  s.OrderBy,
 	}
-	r, err := as.c.Find(ctx, bson.D{}, &opt)
+	log.Println(s.Querys, s.OrderBy)
+	r, err := as.c.Find(ctx, s.Querys, &opt)
 	if err != nil {
 		return nil, fmt.Errorf("find: %w", err)
 	}
-	if err := r.All(ctx, &as); err != nil {
+	if err := r.All(ctx, &ads); err != nil {
 		return nil, fmt.Errorf("decode all: %w", err)
 	}
 	return ads, nil
 }
 
-func (as AddressStorage) Nearest(ctx context.Context, loc model.Location) (string, error) {
+func (as AddressStorage) Nearest(ctx context.Context, loc []float64) (string, error) {
 	var near model.Address
 	opts := options.FindOne().SetProjection(bson.M{"_id": 1})
 	r := as.c.FindOne(ctx, bson.M{
@@ -84,7 +87,7 @@ func (as AddressStorage) Nearest(ctx context.Context, loc model.Location) (strin
 			"$near": bson.M{
 				"$geometry": bson.M{
 					"type":        "Point",
-					"coordinates": []float64{loc.Long, loc.Lat},
+					"coordinates": loc,
 				},
 				"$maxDistance": as.maxDis,
 			},

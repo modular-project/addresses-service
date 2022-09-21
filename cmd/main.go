@@ -67,7 +67,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("NewDB: %s", err)
 	}
-	ast := storage.NewAddressStorage(db, 1000)
+	ast := storage.NewAddressStorage(db, 500000)
 	dst := storage.NewDeliveryStorage(db)
 	key, ok := os.LookupEnv("GMAP_APIKEY")
 	if !ok {
@@ -77,12 +77,12 @@ func main() {
 	if err != nil {
 		log.Fatalf("NewGMapService: %s", err)
 	}
-	env := "ADD_HOST"
+	env := "ADDR_HOST"
 	host, f := os.LookupEnv(env)
 	if !f {
 		log.Fatalf("environment variable (%s) not found", env)
 	}
-	env = "ADD_PORT"
+	env = "ADDR_PORT"
 	port, f := os.LookupEnv(env)
 	if !f {
 		log.Fatalf("environment variable (%s) not found", env)

@@ -63,9 +63,9 @@ func (ds DeliveryStorage) DeleteByID(ctx context.Context, uID uint64, aID string
 	if err != nil {
 		return 0, fmt.Errorf("ObjectIDFromHex: %w", err)
 	}
-	r, err := ds.c.DeleteOne(ctx, bson.M{"user_id": uID, "_id": id})
+	r, err := ds.c.UpdateOne(ctx, bson.M{"user_id": uID, "_id": id}, bson.D{{"$set", bson.D{{"is_deleted", true}}}})
 	if err != nil {
 		return 0, fmt.Errorf("DeleteOne: %w", err)
 	}
-	return r.DeletedCount, nil
+	return r.MatchedCount, nil
 }
