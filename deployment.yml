@@ -50,6 +50,12 @@ spec:
             secretKeyRef:
               name: addr-secret
               key: host
+        - name: GMAP_APIKEY
+          valueFrom:
+            secretKeyRef:
+              name: addr-secret
+              key: gmap_apikey
+              
         - name: ADDR_DB_PORT
           value: '5432'
         - name: APP_NAME

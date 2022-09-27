@@ -68,6 +68,7 @@ jobs:
         --from-literal=user='${{secrets.DB_USER}}' \
         --from-literal=name='${{secrets.DB_NAME}}' \
         --from-literal=host='${{secrets.DB_HOST}}' \
+        --from-literal=gmap_apikey='${{secrets.GMAP_APIKEY}}' \
         --dry-run=true -o yaml | kubectl apply -f -
     - name: Deploy
       run: |-
