@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: addr-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: addr-app
+  template:
+    metadata:
+      labels:
+        app: addr-app
+    spec:
+      containers:
+      - name: addr-app
+        image: LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+            ephemeral-storage: "64Mi"
+          limits:
+            memory: "256Mi"
+            cpu: "250m"
+            ephemeral-storage: "128Mi"
+        ports:
+        - containerPort: 3003
+          protocol: TCP
+        env:
+        # - name: GRPC_XDS_BOOTSTRAP
+        #   value: /bootstrap.json
+        - name: ADDR_DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: addr-secret
+              key: name
+        - name: ADDR_DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: addr-secret
+              key: user
+        - name: ADDR_DB_PWD
+          valueFrom:
+            secretKeyRef:
+              name: addr-secret
+              key: pwd
+        - name: ADDR_DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: addr-secret
+              key: host
+        - name: ADDR_DB_PORT
+          value: '5432'
+        - name: APP_NAME
+          value: Punto y Coma
+        - name: ADDR_HOST #TODO: UPDATE
+          value: localhost
+        - name: ADDR_PORT
+          value: '3003'
+
+# ---
+# apiVersion: autoscaling/v1
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   name: addr-app
+# spec:
+#   scaleTargetRef:
+#     apiVersion: apps/v1
+#     kind: Deployment
+#     name: addr-app
+#   minReplicas: 1
+#   maxReplicas: 3
+#   targetCPUUtilizationPercentage: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: addr-svc
+  # annotations:
+  #   cloud.google.com/neg: '{"exposed_ports":{"3003":{}}}'
+spec:
+  ports:
+  - port: 3003
+    name: addr-port-svc
+    protocol: TCP
+    targetPort: 3003
+  selector:
+    app: addr-app
+  type: ClusterIP
