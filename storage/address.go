@@ -17,8 +17,11 @@ type AddressStorage struct {
 	maxDis int
 }
 
-func NewAddressStorage(db *mongo.Database, max int) AddressStorage {
-	return AddressStorage{c: db.Collection("establishment"), maxDis: max}
+func NewAddressStorage(db *mongo.Database, max int, coll string) AddressStorage {
+	if coll == "" {
+		coll = "establishment"
+	}
+	return AddressStorage{c: db.Collection(coll), maxDis: max}
 }
 
 func (as AddressStorage) GetByID(ctx context.Context, aID string) (model.Address, error) {

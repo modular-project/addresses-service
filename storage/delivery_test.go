@@ -114,7 +114,7 @@ func TestDeliveryStorage_Create(t *testing.T) {
 	if err != nil {
 		t.Fatalf("failed to NewDB: %s", err)
 	}
-	ds := NewDeliveryStorage(db)
+	ds := NewDeliveryStorage(db, "")
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := ds.Create(tt.args.ctx, &tt.args.d)
@@ -142,7 +142,7 @@ func TestNewDeliveryStorage(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := NewDeliveryStorage(tt.args.db); !reflect.DeepEqual(got, tt.want) {
+			if got := NewDeliveryStorage(tt.args.db, ""); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("NewDeliveryStorage() = %v, want %v", got, tt.want)
 			}
 		})
@@ -210,7 +210,7 @@ func TestDeliveryStorage_GetByID(t *testing.T) {
 	}
 	initDB(t, db)
 	t.Cleanup(func() { dropTest(t, db) })
-	ds := NewDeliveryStorage(db)
+	ds := NewDeliveryStorage(db, "")
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

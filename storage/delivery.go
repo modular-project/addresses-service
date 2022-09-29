@@ -14,8 +14,11 @@ type DeliveryStorage struct {
 	c *mongo.Collection
 }
 
-func NewDeliveryStorage(db *mongo.Database) DeliveryStorage {
-	return DeliveryStorage{db.Collection("delivery")}
+func NewDeliveryStorage(db *mongo.Database, coll string) DeliveryStorage {
+	if coll == "" {
+		coll = "delivery"
+	}
+	return DeliveryStorage{db.Collection(coll)}
 }
 
 func (ds DeliveryStorage) Create(ctx context.Context, d *model.Delivery) (string, error) {
@@ -63,7 +66,7 @@ func (ds DeliveryStorage) DeleteByID(ctx context.Context, uID uint64, aID string
 	if err != nil {
 		return 0, fmt.Errorf("ObjectIDFromHex: %w", err)
 	}
-	r, err := ds.c.UpdateOne(ctx, bson.M{"user_id": uID, "_id": id}, bson.D{{"$set", bson.D{{"is_deleted", true}}}})
+	r, err := ds.c.UpdateOne(ctx, bson.M{"user_id": uID, "_id": id}, bson.D{{Key: "$set", Value: bson.D{{Key: "is_deleted", Value: true}}}})
 	if err != nil {
 		return 0, fmt.Errorf("DeleteOne: %w", err)
 	}

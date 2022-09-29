@@ -69,8 +69,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("NewDB: %s", err)
 	}
-	ast := storage.NewAddressStorage(db, 500000)
-	dst := storage.NewDeliveryStorage(db)
+	coll, _ := os.LookupEnv("ADDR_COLLECTION")
+	ast := storage.NewAddressStorage(db, 50000, coll)
+	coll, _ = os.LookupEnv("DEL_COLLECTION")
+	dst := storage.NewDeliveryStorage(db, coll)
 	key, ok := os.LookupEnv("GMAP_APIKEY")
 	if !ok {
 		log.Fatal("enviroment variable GMAP_APIKEY not found")

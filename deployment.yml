@@ -55,7 +55,10 @@ spec:
             secretKeyRef:
               name: addr-secret
               key: gmap_apikey
-              
+        - name: ADDR_COLLECTION
+          value: modular-establishment
+        - name: DEL_COLLECTION
+          value: modular-delivery
         - name: ADDR_DB_PORT
           value: '5432'
         - name: APP_NAME
