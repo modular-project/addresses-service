@@ -7,8 +7,8 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GAR_LOCATION: northamerica-northeast1
-  GKE_CLUSTER: modular-auto-gke 
-  GKE_ZONE: northamerica-northeast1 
+  GKE_CLUSTER: modular-gke 
+  GKE_ZONE: northamerica-northeast1-a
   DEPLOYMENT_NAME: addr-deployment 
   REPOSITORY: user-img 
   IMAGE: addr-app-img
