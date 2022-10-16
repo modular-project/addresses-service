@@ -70,7 +70,7 @@ func main() {
 		log.Fatalf("NewDB: %s", err)
 	}
 	coll, _ := os.LookupEnv("ADDR_COLLECTION")
-	ast := storage.NewAddressStorage(db, 50000, coll)
+	ast := storage.NewAddressStorage(db, 25000, coll)
 	coll, _ = os.LookupEnv("DEL_COLLECTION")
 	dst := storage.NewDeliveryStorage(db, coll)
 	key, ok := os.LookupEnv("GMAP_APIKEY")
